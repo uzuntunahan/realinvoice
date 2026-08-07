@@ -1,7 +1,9 @@
 package com.megudacorp.realinvoice.business.responses;
 
+import com.megudacorp.realinvoice.business.requests.CreateInvoiceLineRequest;
 import lombok.Data;
 import java.time.LocalDateTime;
+import java.util.List;
 
 @Data
 public class GetInvoiceListResponse {
@@ -9,5 +11,6 @@ public class GetInvoiceListResponse {
     private String invoiceNumber;
     private LocalDateTime invoiceDate;
     private double totalAmount;
-    private String customerTitle; // Müşterinin sadece adını dönmek dış dünya için yeterlidir
+    private String customerTitle;
+    private List<CreateInvoiceLineRequest> invoiceLines;
 }

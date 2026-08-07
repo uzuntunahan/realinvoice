@@ -117,6 +117,21 @@ public class InvoiceManager implements InvoiceService {
                             .map(invoice, GetInvoiceListResponse.class);
 
                     response.setCustomerTitle(invoice.getCustomer().getTitle());
+
+                    // Faturaya bağlı alt kalemleri tek tek response DTO'sunun içine dolduruyoruz
+                    if (invoice.getInvoiceLines() != null) {
+                        List<CreateInvoiceLineRequest> lineRequests = invoice.getInvoiceLines().stream().map(line -> {
+                            CreateInvoiceLineRequest lineRequest = new CreateInvoiceLineRequest();
+                            lineRequest.setItemName(line.getItemName());
+                            lineRequest.setQuantity(line.getQuantity());
+                            lineRequest.setPrice(line.getPrice());
+                            lineRequest.setUserId(line.getUser().getUserId());
+                            return lineRequest;
+                        }).collect(Collectors.toList());
+
+                        response.setInvoiceLines(lineRequests);
+                    }
+
                     return response;
                 })
                 .filter(Objects::nonNull)

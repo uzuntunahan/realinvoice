@@ -34,20 +34,25 @@ export default function InvoiceForm({ isEditing, initialData, onSubmit, onCancel
     <div style={{ backgroundColor: '#f9fafb', padding: '20px', borderRadius: '8px', border: '1px solid #e4e4e7' }}>
       <h2>{isEditing ? 'Faturayı Düzenle' : 'Yeni Fatura Oluştur'}</h2>
       <form onSubmit={handleSubmit} style={{ display: 'flex', flexDirection: 'column', gap: '12px', marginTop: '15px' }}>
-        <label>Fatura Numarası:</label>
+        
+        <label>Fatura Numarası / Kodu:</label>
         <input type="text" value={formData.invoiceNumber} required style={{ padding: '8px', border: '1px solid #ccc', borderRadius: '4px' }} onChange={(e) => setFormData({ ...formData, invoiceNumber: e.target.value })} />
 
+        {/* Kullanıcı güncelleme yapmıyorsa ürün satır bilgilerini girebilir */}
         {!isEditing && (
           <>
-            <label>Ürün Adı:</label>
-            <input type="text" value={formData.itemName} required style={{ padding: '8px', border: '1px solid #ccc', borderRadius: '4px' }} onChange={(e) => setFormData({ ...formData, itemName: e.target.value })} />
+            <h3 style={{ marginTop: '15px', borderBottom: '1px solid #ddd', paddingBottom: '5px' }}>Hizmet / Ürün Kalemi</h3>
+            
+            <label>Ürün/Hizmet Adı:</label>
+            <input type="text" value={formData.itemName} required placeholder="Örn: Sunucu Barındırma Bedeli" style={{ padding: '8px', border: '1px solid #ccc', borderRadius: '4px' }} onChange={(e) => setFormData({ ...formData, itemName: e.target.value })} />
+            
             <div style={{ display: 'flex', gap: '10px' }}>
               <div style={{ flex: 1, display: 'flex', flexDirection: 'column' }}>
                 <label>Adet:</label>
                 <input type="number" value={formData.quantity} min="1" required style={{ padding: '8px', border: '1px solid #ccc', borderRadius: '4px' }} onChange={(e) => setFormData({ ...formData, quantity: Number(e.target.value) })} />
               </div>
               <div style={{ flex: 1, display: 'flex', flexDirection: 'column' }}>
-                <label>Birim Fiyat:</label>
+                <label>Birim Fiyat (TL):</label>
                 <input type="number" value={formData.price || ''} required style={{ padding: '8px', border: '1px solid #ccc', borderRadius: '4px' }} onChange={(e) => setFormData({ ...formData, price: Number(e.target.value) })} />
               </div>
             </div>
@@ -61,7 +66,7 @@ export default function InvoiceForm({ isEditing, initialData, onSubmit, onCancel
           </>
         )}
 
-        <div style={{ display: 'flex', gap: '10px', marginTop: '10px' }}>
+        <div style={{ display: 'flex', gap: '10px', marginTop: '15px' }}>
           <button type="submit" style={{ flex: 2, padding: '10px', backgroundColor: isEditing ? '#eab308' : '#2563eb', color: 'white', border: 'none', borderRadius: '4px', cursor: 'pointer', fontWeight: 'bold' }}>
             {isEditing ? 'Değişiklikleri Kaydet' : 'Faturayı Kaydet'}
           </button>

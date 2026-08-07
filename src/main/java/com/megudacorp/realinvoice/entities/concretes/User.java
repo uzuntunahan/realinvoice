@@ -11,7 +11,6 @@ import java.time.LocalDateTime;
 @Getter
 @Setter
 public class User {
-
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "user_id")
@@ -26,7 +25,6 @@ public class User {
     @Column(name = "record_date")
     private LocalDateTime recordDate;
 
-    // Boş Constructor (Hibernate için şart)
     public User() {
     }
 }

@@ -35,8 +35,8 @@ public class Invoice {
     @JoinColumn(name = "user_id")
     private User user;
 
-    // Bir faturanın birden fazla kalemi (satırı) olur
-    @OneToMany(mappedBy = "invoice", cascade = CascadeType.ALL)
+    // Bir faturanın birden fazla kalemi olur
+    @OneToMany(mappedBy = "invoice", cascade = CascadeType.ALL, fetch = FetchType.EAGER)
     private List<InvoiceLine> invoiceLines;
 
     public Invoice() {}

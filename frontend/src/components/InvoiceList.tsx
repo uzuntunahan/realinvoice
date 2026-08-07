@@ -5,9 +5,10 @@ interface InvoiceListProps {
   loading: boolean;
   onEdit: (invoice: any) => void;
   onDelete: (id: number) => void;
+  onViewDetails: (invoice: any) => void;
 }
 
-export default function InvoiceList({ invoices, loading, onEdit, onDelete }: InvoiceListProps) {
+export default function InvoiceList({ invoices, loading, onEdit, onDelete, onViewDetails }: InvoiceListProps) {
   if (loading) return <p>Faturalar yükleniyor...</p>;
   if (invoices.length === 0) return <p style={{ color: '#888' }}>Henüz fatura kaydı bulunamadı.</p>;
 
@@ -26,13 +27,11 @@ export default function InvoiceList({ invoices, loading, onEdit, onDelete }: Inv
         {invoices.map((invoice, index) => (
           <tr key={invoice.invoiceId || index} style={{ borderBottom: '1px solid #e4e4e7' }}>
             <td style={{ padding: '12px' }}>{invoice.invoiceNumber}</td>
-            <td style={{ padding: '12px' }}>
-              {/*  customerTitle null ise hata verme, direkt çizgi koy */}
-              {invoice?.customerTitle ? invoice.customerTitle : 'Müşteri Yok (NULL)'}
-            </td>
+            <td style={{ padding: '12px' }}>{invoice.customerTitle || 'Belirtilmemiş'}</td>
             <td style={{ padding: '12px' }}>{invoice.totalAmount} TL</td>
             <td style={{ padding: '12px' }}>{invoice.invoiceDate ? new Date(invoice.invoiceDate).toLocaleDateString('tr-TR') : '-'}</td>
             <td style={{ padding: '12px', display: 'flex', gap: '8px', justifyContent: 'center' }}>
+              <button onClick={() => onViewDetails(invoice)} style={{ padding: '6px 12px', backgroundColor: '#2563eb', color: 'white', border: 'none', borderRadius: '4px', cursor: 'pointer' }}>Detay</button>
               <button onClick={() => onEdit(invoice)} style={{ padding: '6px 12px', backgroundColor: '#eab308', color: 'white', border: 'none', borderRadius: '4px', cursor: 'pointer' }}>Düzenle</button>
               <button onClick={() => onDelete(invoice.invoiceId)} style={{ padding: '6px 12px', backgroundColor: '#dc2626', color: 'white', border: 'none', borderRadius: '4px', cursor: 'pointer' }}>Sil</button>
             </td>
